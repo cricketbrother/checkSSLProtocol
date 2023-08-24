@@ -9,18 +9,19 @@ var (
 // 获取参数
 func initFlag() (string, string, string, int) {
 	flag.Usage = func() {
-		println("A tool to check SSL/TLS protocol support")
-		println("Version:    " + version)
+		println("checkSSLProtocol " + version + ", a tool to check SSL/TLS protocol support")
 		println()
-		println("Usage: checkSSLProtocol2 [-d domain] [-p port] [-f file] [-m max threads]")
+		println("Usage:")
+		println("  checkSSLProtocol [-d domain] [-p port] [-f file] [-m max threads]")
 		println("Options:")
 		flag.PrintDefaults()
-		println("Notice: if -d, -p and -f are specified at the same time, -d and -p will be ignored")
+		println("Notice:")
+		println("  if -d, -p and -f are specified at the same time, -d and -p will be ignored")
 		println("Examples:")
-		println("\tcheckSSLProtocol2 -d www.baidu.com -p 443")
-		println("\tcheckSSLProtocol2 -d www.baidu.com")
-		println("\tcheckSSLProtocol2 -f sites.txt")
-		println("\tcheckSSLProtocol2 -f sites.txt -m 20")
+		println("  checkSSLProtocol -d www.baidu.com -p 443")
+		println("  checkSSLProtocol -d www.baidu.com")
+		println("  checkSSLProtocol -f sites.txt")
+		println("  checkSSLProtocol -f sites.txt -m 20")
 	}
 	domain := flag.String("d", "", "domain")
 	port := flag.String("p", "443", "port")

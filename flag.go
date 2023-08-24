@@ -3,7 +3,7 @@ package main
 import "flag"
 
 var (
-	version string
+	version string = "local-build"
 )
 
 // 获取参数

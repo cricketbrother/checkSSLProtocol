@@ -39,7 +39,7 @@ jobs:
                 sudo -E mkdir bin
                 cd bin
                 datetime=$(date "+%Y-%m-%d %H:%M:%S")
-                go build -ldflags "-X 'main.version=${{ steps.tag.outputs.tag }}'" ../
+                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" ../
             
             - name: Upload Release Assets
               uses: softprops/action-gh-release@v1

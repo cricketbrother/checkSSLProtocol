@@ -34,7 +34,7 @@ jobs:
 
             - name: Build
               run: |
-                go mod init $GITHUB_REPOSITORY
+                go mod init checkSSLProtocol
                 go mod tidy
                 sudo -E mkdir bin
                 cd bin

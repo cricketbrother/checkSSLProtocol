@@ -49,7 +49,7 @@ jobs:
                 go env -w GOOS=linux
                 go env -w GOARCH=386
                 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.linux.386 ./
-                echo building linux 386
+                echo building windows 386
                 go env -w GOOS=windows
                 go env -w GOARCH=386
                 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.windows.386.exe ./

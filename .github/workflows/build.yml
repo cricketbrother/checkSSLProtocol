@@ -1,0 +1,50 @@
+name: Auto Build
+
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Upgrade OS
+              run: |
+                sudo -E apt update -y
+                sudo -E apt full-upgrade -y
+
+            - name: Install Golang
+              run: sudo -E apt install golang -y
+
+            - name: Checkout Repository
+              uses: actions/checkout@v3
+
+            - name: Set Tag
+              id: tag
+              run: |
+                tag=$(date +"v%Y.%m.%d")
+                echo "tag=$tag" >> $GITHUB_OUTPUT
+
+            - name: Set Timezone
+              run: |
+                sudo -E timedatectl set-timezone Asia/Shanghai
+
+            - name: Build
+              run: |
+                sudo -E mkdir bin
+                cd bin
+                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }} -X main.buildTime=$(date -u +%Y-%m-%d %H:%M:%S)" ../
+            
+            - name: Upload release assets
+              uses: softprops/action-gh-release@v1
+              with:
+                files: bin/*
+                tag_name: ${{ steps.tag.outputs.tag }}
+                draft: false
+                prerelease: false

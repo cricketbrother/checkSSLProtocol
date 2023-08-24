@@ -10,10 +10,10 @@ OpenSSL 1.1.1 or higher additional supports check TLSv1.3, otherwise only suppor
 ## How To Use
 ```
 PS > .\checkSSLProtocol.windows.amd64.exe -h
-checkSSLProtocol v2023.08.24.104500, a tool to check SSL/TLS protocol support
+checkSSLProtocol v2023.08.24.160605, a tool to check site(s) SSL/TLS protocol support
 
 Usage:
-  checkSSLProtocol [-d domain] [-p port] [-f file] [-m max threads]
+  checkSSLProtocol [-d value] [-p value] [-f value] [-o value] [-m value] [-h]
 Options:
   -d string
         domain
@@ -21,6 +21,8 @@ Options:
         a file contains sites, one site per line
   -m int
         max threads (default 10)
+  -o string
+        output file (default "result.csv")
   -p string
         port (default "443")
 Notice:

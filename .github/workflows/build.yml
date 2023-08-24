@@ -37,15 +37,19 @@ jobs:
                 go mod init checkSSLProtocol
                 go mod tidy
                 mkdir bin
+                echo building linux amd64
                 go env -w GOOS=linux
                 go env -w GOARCH=amd64
                 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.linux.amd64 ./
+                echo building windows amd64
                 go env -w GOOS=windows
                 go env -w GOARCH=amd64
                 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.windows.amd64.exe ./
+                echo building linux 386
                 go env -w GOOS=linux
                 go env -w GOARCH=386
                 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.linux.386 ./
+                echo building linux 386
                 go env -w GOOS=windows
                 go env -w GOARCH=386
                 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.windows.386.exe ./

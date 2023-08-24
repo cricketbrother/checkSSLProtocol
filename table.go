@@ -98,8 +98,8 @@ func tableRender(data [][]string) {
 }
 
 // 渲染CSV
-func csvRender(data [][]string) {
-	f, err := os.OpenFile("result.csv", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
+func csvRender(data [][]string, output string) {
+	f, err := os.OpenFile(output, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
 	if err != nil {
 		println("文件创建失败")
 		return

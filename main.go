@@ -63,7 +63,7 @@ func checkSites(sites []string, tlsv13Flag bool, maxThreads int) [][]string {
 
 func main() {
 	// 获取命令行参数
-	domain, port, file, maxThreads := initFlag()
+	domain, port, file, output, maxThreads := initFlag()
 
 	// 获取网站列表
 	sites, err := getSites(domain, port, file)
@@ -92,5 +92,5 @@ func main() {
 	// 打印结果
 	time.Sleep(3 * time.Second)
 	tableRender(data)
-	csvRender(data)
+	csvRender(data, output)
 }

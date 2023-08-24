@@ -7,12 +7,12 @@ var (
 )
 
 // 获取参数
-func initFlag() (string, string, string, int) {
+func initFlag() (string, string, string, string, int) {
 	flag.Usage = func() {
 		println("checkSSLProtocol " + version + ", a tool to check SSL/TLS protocol support")
 		println()
 		println("Usage:")
-		println("  checkSSLProtocol [-d domain] [-p port] [-f file] [-m max threads]")
+		println("  checkSSLProtocol [-d value] [-p value] [-f value] [-o value] [-m value] [-h]")
 		println("Options:")
 		flag.PrintDefaults()
 		println("Notice:")
@@ -26,7 +26,8 @@ func initFlag() (string, string, string, int) {
 	domain := flag.String("d", "", "domain")
 	port := flag.String("p", "443", "port")
 	file := flag.String("f", "", "a file contains sites, one site per line")
+	output := flag.String("o", "result.csv", "output file")
 	maxThreads := flag.Int("m", 10, "max threads")
 	flag.Parse()
-	return *domain, *port, *file, *maxThreads
+	return *domain, *port, *file, *output, *maxThreads
 }

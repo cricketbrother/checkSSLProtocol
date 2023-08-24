@@ -62,6 +62,8 @@ func checkSites(sites []string, tlsv13Flag bool, maxThreads int) [][]string {
 }
 
 func main() {
+	println("checkSSLProtocol " + version + ", a tool to check site(s) SSL/TLS protocol support")
+
 	// 获取命令行参数
 	domain, port, file, output, maxThreads := initFlag()
 

@@ -7,7 +7,7 @@ var version string = "local-build"
 // 获取参数
 func initFlag() (string, string, string, string, int) {
 	flag.Usage = func() {
-		println("checkSSLProtocol " + version + ", a tool to check SSL/TLS protocol support")
+		println("checkSSLProtocol " + version + ", a tool to check site(s) SSL/TLS protocol support")
 		println()
 		println("Usage:")
 		println("  checkSSLProtocol [-d value] [-p value] [-f value] [-o value] [-m value] [-h]")

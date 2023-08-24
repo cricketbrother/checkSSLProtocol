@@ -25,7 +25,7 @@ jobs:
             - name: Set Tag
               id: tag
               run: |
-                tag=$(date +"v%Y.%m.%d")
+                tag=$(date +"v%Y.%m.%d.%H%M%S")
                 echo "tag=$tag" >> $GITHUB_OUTPUT
 
             - name: Set Timezone
@@ -39,7 +39,7 @@ jobs:
                 sudo -E mkdir bin
                 cd bin
                 datetime=$(date "+%Y-%m-%d %H:%M:%S")
-                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }} -X main.buildTime=$datetime" ../
+                go build -ldflags "-X 'main.version=${{ steps.tag.outputs.tag }}'" ../
             
             - name: Upload Release Assets
               uses: softprops/action-gh-release@v1

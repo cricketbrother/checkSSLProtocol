@@ -122,5 +122,5 @@ func csvRender(data [][]string, output string) {
 		i++
 	}
 	outputAbs, _ := filepath.Abs(output)
-	println("\nCheck result has been saved to " + outputAbs)
+	println("Result has been saved to " + outputAbs)
 }

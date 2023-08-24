@@ -64,7 +64,7 @@ func tableRender(data [][]string) {
 	for i, row := range data {
 		row = append([]string{strconv.Itoa(i + 1)}, row...)
 		if row != nil {
-			switch row[7] {
+			switch row[8] {
 			case "PASS":
 				passCount++
 			case "FAIL":

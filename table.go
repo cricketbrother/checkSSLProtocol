@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -99,9 +100,15 @@ func tableRender(data [][]string) {
 
 // 渲染CSV
 func csvRender(data [][]string, output string) {
+	err := os.MkdirAll(filepath.Dir(output), 0o755)
+	if err != nil {
+		println("Directory create failed, result file will be saved to current directory")
+		output = "result.csv"
+	}
+
 	f, err := os.OpenFile(output, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
 	if err != nil {
-		println("文件创建失败")
+		println("Result file create failed, result will not be saved")
 		return
 	}
 	defer f.Close()
@@ -114,5 +121,5 @@ func csvRender(data [][]string, output string) {
 		}
 		i++
 	}
-	println("\nCheck result has been saved to result.csv")
+	println("\nCheck result has been saved to " + output)
 }

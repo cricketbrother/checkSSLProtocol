@@ -98,7 +98,7 @@ func compareOpenSSLVersion(version string) bool {
 func checkSiteByNmap(site string, tlsv13Flag bool) []string {
 	domain := site[:strings.Index(site, ":")]
 	port := site[strings.Index(site, ":")+1:]
-	cmd := exec.Command("nmap", "--script", "ssl-enum-ciphers", "-p", port, domain, "2>&1")
+	cmd := exec.Command("nmap", "--unprivileged", "--script", "ssl-enum-ciphers", "-p", port, domain, "2>&1")
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		println(err.Error())

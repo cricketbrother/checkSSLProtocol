@@ -19,8 +19,9 @@ jobs:
                 sudo -E apt update
                 sudo -E apt install golang -y
 
-            - name: Checkout Repository
-              uses: actions/checkout@v3
+            - name: Set Timezone
+              run: |
+                sudo -E timedatectl set-timezone Asia/Shanghai
 
             - name: Set Tag
               id: tag
@@ -28,18 +29,26 @@ jobs:
                 tag=$(date +"v%Y.%m.%d.%H%M%S")
                 echo "tag=$tag" >> $GITHUB_OUTPUT
 
-            - name: Set Timezone
-              run: |
-                sudo -E timedatectl set-timezone Asia/Shanghai
+            - name: Checkout Repository
+              uses: actions/checkout@v3
 
             - name: Build
               run: |
                 go mod init checkSSLProtocol
                 go mod tidy
                 mkdir bin
-                cd bin
-                datetime=$(date "+%Y-%m-%d %H:%M:%S")
-                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" ../
+                go env -w GOOS=linux
+                go env -w GOARCH=amd64
+                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" ./ -o ./bin/checkSSLProtocol.linux.amd64
+                go env -w GOOS=windows
+                go env -w GOARCH=amd64
+                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" ./ -o ./bin/checkSSLProtocol.windows.amd64.exe
+                go env -w GOOS=linux
+                go env -w GOARCH=386
+                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" ./ -o ./bin/checkSSLProtocol.linux.386
+                go env -w GOOS=windows
+                go env -w GOARCH=386
+                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" ./ -o ./bin/checkSSLProtocol.windows.386.exe
             
             - name: Upload Release Assets
               uses: softprops/action-gh-release@v1

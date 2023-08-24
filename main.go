@@ -61,6 +61,8 @@ func checkSites(sites []string, tlsv13Flag bool, maxThreads int) [][]string {
 	return data
 }
 
+var version string = "local-build"
+
 func main() {
 	println("checkSSLProtocol " + version + ", a tool to check site(s) SSL/TLS protocol support")
 	println()

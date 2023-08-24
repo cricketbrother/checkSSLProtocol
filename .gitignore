@@ -20,7 +20,6 @@
 # Go workspace file
 go.work
 
-#不以.go/.mod/.sum结尾的文件
-!*.go
-!*.mod
-!*.sum
+bin/
+*.txt
+*.csv

@@ -15,7 +15,9 @@ jobs:
 
         steps:
             - name: Install Golang
-              run: sudo -E apt install golang -y
+              run: |
+                sudo -E apt update
+                sudo -E apt install golang -y
 
             - name: Checkout Repository
               uses: actions/checkout@v3

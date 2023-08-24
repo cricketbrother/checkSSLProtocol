@@ -39,9 +39,12 @@ jobs:
               run: |
                 sudo -E mkdir bin
                 cd bin
-                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }} -X main.buildTime=$(date -u +%Y-%m-%d %H:%M:%S)" ../
+                datetime=$(date "+%Y-%m-%d %H:%M:%S")
+                go mod init $GITHUB_REPOSITORY
+                go mod tidy
+                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }} -X main.buildTime=$datetime" ../
             
-            - name: Upload release assets
+            - name: Upload Release Assets
               uses: softprops/action-gh-release@v1
               with:
                 files: bin/*

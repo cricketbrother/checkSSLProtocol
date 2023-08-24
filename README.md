@@ -1,6 +1,12 @@
 # checkSSLProtocol
+## Description
+A tool to check site(s) SSL/TLS protocol support.
+## Requirements
+Nmap and OpenSSL must been installed in your operating system. 
 
+OpenSSL version needs 1.0.2 or higher. 
 
+OpenSSL 1.1.1 or higher additional supports check TLSv1.3, otherwise only support check SSLv3, TLSv1.0, TLSv1.1 and TLSv1.2.
 ## How To Use
 ```
 PS > .\checkSSLProtocol.windows.amd64.exe -h

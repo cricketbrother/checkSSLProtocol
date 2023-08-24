@@ -76,12 +76,12 @@ func tableRender(data [][]string) {
 				{},
 				{},
 				{},
-				insecureProtocolColor(row[2]),
 				insecureProtocolColor(row[3]),
 				insecureProtocolColor(row[4]),
-				secureProtocolColor(row[5]),
+				insecureProtocolColor(row[5]),
 				secureProtocolColor(row[6]),
-				resultColor(row[7]),
+				secureProtocolColor(row[7]),
+				resultColor(row[8]),
 			},
 			)
 		}

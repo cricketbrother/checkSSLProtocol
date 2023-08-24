@@ -1,0 +1,9 @@
+No.,Site,IP,SSLv3,TLSv1.0,TLSv1.1,TLSv1.2,TLSv1.3,Result
+1,test.test.test:443,--,Unknown,Unknown,Unknown,Unknown,Unknown,Unknown
+2,www.baidu.com:443,110.242.68.4,Yes,Yes,Yes,Yes,No,FAIL
+3,fksap.dtinsure.com:443,139.224.95.94,No,Yes,Yes,Yes,No,FAIL
+4,hr.dtinsure.com:443,10.176.8.62,No,Yes,Yes,Yes,No,FAIL
+5,www-sta.kbao123.com:443,10.176.17.186,No,Yes,Yes,Yes,No,FAIL
+6,www.dtinsure.com:443,10.176.202.33,Yes,Yes,Yes,Yes,No,FAIL
+7,letsencrypt.org:443,35.199.181.187,No,No,No,Yes,Yes,PASS
+8,oa.dtinsure.com:443,139.224.94.124,No,Yes,Yes,Yes,No,FAIL

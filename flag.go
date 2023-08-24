@@ -2,9 +2,7 @@ package main
 
 import "flag"
 
-var (
-	version string = "local-build"
-)
+var version string = "local-build"
 
 // 获取参数
 func initFlag() (string, string, string, string, int) {

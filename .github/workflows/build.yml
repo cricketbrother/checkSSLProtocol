@@ -1,9 +1,9 @@
 name: Auto Build
 
 on:
-    # push:
-    #     branches:
-    #         - main
+    push:
+        branches:
+            - main
     workflow_dispatch:
 
 permissions:
@@ -12,16 +12,45 @@ permissions:
 jobs:
     build:
         runs-on: ubuntu-latest
-
         steps:
-            - name: Install Golang
-              run: |
-                sudo -E apt update
-                sudo -E apt install golang -y
-
             - name: Set Timezone
               run: |
                 sudo -E timedatectl set-timezone Asia/Shanghai
+
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Setup Go
+              uses: actions/setup-go@v4
+              with:
+                go-version: 'stable'
+                check-latest: true
+
+            - name: Build
+              run: |
+                echo "Building linux-amd64 binary..."
+                GOOS=linux GOARCH=amd64 go build -v -o ./bin/checkSSLProtocol.linux.amd64 ./
+                echo "Done"
+
+                echo "Building linux-386 binary..."
+                GOOS=linux GOARCH=386 go build -v -o ./bin/checkSSLProtocol.linux.386 ./
+                echo "Done"
+
+                echo "Building windows-amd64 binary..."
+                GOOS=windows GOARCH=amd64 go build -v -o ./bin/checkSSLProtocol.windows.amd64.exe ./
+                echo "Done"
+
+                echo "Building windows-386 binary..."
+                GOOS=windows GOARCH=386 go build -v -o ./bin/checkSSLProtocol.windows.386.exe ./
+                echo "Done"
+
+                echo "Building darwin-amd64 binary..."
+                GOOS=darwin GOARCH=amd64 go build -v -o ./bin/checkSSLProtocol.darwin.amd64 ./
+                echo "Done"
+
+                echo "Building darwin-arm64 binary..."
+                GOOS=darwin GOARCH=arm64 go build -v -o ./bin/checkSSLProtocol.darwin.arm64 ./
+                echo "Done"
 
             - name: Set Tag
               id: tag
@@ -29,31 +58,6 @@ jobs:
                 tag=$(date +"v%Y.%m.%d.%H%M%S")
                 echo "tag=$tag" >> $GITHUB_OUTPUT
 
-            - name: Checkout Repository
-              uses: actions/checkout@v3
-
-            - name: Build
-              run: |
-                go mod init checkSSLProtocol
-                go mod tidy
-                mkdir bin
-                echo building linux amd64
-                go env -w GOOS=linux
-                go env -w GOARCH=amd64
-                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.linux.amd64 ./
-                echo building windows amd64
-                go env -w GOOS=windows
-                go env -w GOARCH=amd64
-                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.windows.amd64.exe ./
-                echo building linux 386
-                go env -w GOOS=linux
-                go env -w GOARCH=386
-                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.linux.386 ./
-                echo building windows 386
-                go env -w GOOS=windows
-                go env -w GOARCH=386
-                go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.windows.386.exe ./
-            
             - name: Upload Release Assets
               uses: softprops/action-gh-release@v1
               with:

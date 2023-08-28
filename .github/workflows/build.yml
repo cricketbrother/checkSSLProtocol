@@ -17,6 +17,12 @@ jobs:
               run: |
                 sudo -E timedatectl set-timezone Asia/Shanghai
 
+            - name: Set Tag
+              id: tag
+              run: |
+                tag=$(date +"v%Y.%m.%d.%H%M%S")
+                echo "tag=$tag" >> $GITHUB_OUTPUT
+
             - name: Checkout
               uses: actions/checkout@v3
 
@@ -28,35 +34,12 @@ jobs:
 
             - name: Build
               run: |
-                echo "Building linux-amd64 binary..."
-                GOOS=linux GOARCH=amd64 go build -v -o ./bin/checkSSLProtocol.linux.amd64 ./
-                echo "Done"
-
-                echo "Building linux-386 binary..."
-                GOOS=linux GOARCH=386 go build -v -o ./bin/checkSSLProtocol.linux.386 ./
-                echo "Done"
-
-                echo "Building windows-amd64 binary..."
-                GOOS=windows GOARCH=amd64 go build -v -o ./bin/checkSSLProtocol.windows.amd64.exe ./
-                echo "Done"
-
-                echo "Building windows-386 binary..."
-                GOOS=windows GOARCH=386 go build -v -o ./bin/checkSSLProtocol.windows.386.exe ./
-                echo "Done"
-
-                echo "Building darwin-amd64 binary..."
-                GOOS=darwin GOARCH=amd64 go build -v -o ./bin/checkSSLProtocol.darwin.amd64 ./
-                echo "Done"
-
-                echo "Building darwin-arm64 binary..."
-                GOOS=darwin GOARCH=arm64 go build -v -o ./bin/checkSSLProtocol.darwin.arm64 ./
-                echo "Done"
-
-            - name: Set Tag
-              id: tag
-              run: |
-                tag=$(date +"v%Y.%m.%d.%H%M%S")
-                echo "tag=$tag" >> $GITHUB_OUTPUT
+                GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.darwin.amd64 ./
+                GOOS=darwin GOARCH=arm64 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.darwin.arm64 ./
+                GOOS=linux GOARCH=386 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.linux.386 ./
+                GOOS=linux GOARCH=amd64 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.linux.amd64 ./
+                GOOS=windows GOARCH=386 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.windows.386.exe ./
+                GOOS=windows GOARCH=amd64 go build -ldflags "-X main.version=${{ steps.tag.outputs.tag }}" -o ./bin/checkSSLProtocol.windows.amd64.exe ./
 
             - name: Upload Release Assets
               uses: softprops/action-gh-release@v1

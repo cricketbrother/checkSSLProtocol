@@ -23,5 +23,3 @@ go.work
 bin/
 *.txt
 *.csv
-*.mod
-*.sum
